@@ -10,20 +10,30 @@ const server = http.createServer(app);
 // initialize the WebSocket server instance
 const wss = new WebSocket.Server({ server });
 
-// Send Message function
-const sendMsg = (msg, ws) => {
-    ws.send(msg);
-    console.log('Send Message: ' + msg);
+Date.prototype.toUnixTime = function() { return this.getTime()/1000|0 };
+Date.time = function() { return new Date().toUnixTime(); }
+
+// Generate random int between 2 ints
+function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
+const motionMessageArr = [
+    {"status":"success","data":{"sia":{"device_id":"1000","timestamp":"XXX","sia_code":"ZC","sia_address":"7","description":"Upstairs Landing¦ZONE¦2¦FIRST FLOOR","flags":"","verification_id":"0"}}},
+    {"status":"success","data":{"sia":{"device_id":"1000","timestamp":"XXX","sia_code":"ZC","sia_address":"7","description":"Downstairs Landing¦ZONE¦2¦GROUND FLOOR","flags":"","verification_id":"0"}}},
+    {"status":"success","data":{"sia":{"device_id":"1000","timestamp":"XXX","sia_code":"ZC","sia_address":"7","description":"Lounge¦ZONE¦2¦GROUND FLOOR","flags":"","verification_id":"0"}}}
+];
+
+function pickRandomMsg(msgArr) {
+    return msgArr[randomIntFromInterval(0, msgArr.length-1)];
 }
 
 wss.on('connection', (ws) => {
-    // Sample motion message
-    const motionObject = {"status":"success","data":{"sia":{"device_id":"1000","timestamp":"1665517641","sia_code":"ZC","sia_address":"7","description":"Upstairs Landing¦ZONE¦2¦FIRST FLOOR","flags":"","verification_id":"0"}}};
-
+    
     setInterval(() => {
-        const msg = JSON.stringify(motionObject);
-        ws.send(msg);
-        console.log('Send Message: ' + msg);
+        const msg = JSON.stringify(pickRandomMsg(motionMessageArr));
+        const msgNow = msg.replace("XXX", Date.time());
+        ws.send(msgNow);
+        //console.log('Sent Message: ' + msgNow);
     }, 4000);
 
     //connection is up, let's add a simple simple event
@@ -33,9 +43,6 @@ wss.on('connection', (ws) => {
         console.log('received: %s', message);
         ws.send(`Hello, you sent -> ${message}`);
     });
-
-    //send immediatly a feedback to the incoming connection    
-    ws.send('Hi there, I am a WebSocket server');
 });
 
 //start our server

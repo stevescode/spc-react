@@ -1,24 +1,64 @@
-import logo from './logo.svg';
-import './App.css';
+import { Zone } from "./components/Zone";
+import React, { useState, useEffect } from 'react';
+import { wsclient } from "./socket.config";
+
+const A = () => {
+  const [descriptionA, setDescriptionA] = useState(null);
+  const [timestampA, setTimestampA] = useState(null);
+
+  useEffect(() => {
+    wsclient.onopen = () => {
+    };
+    
+    wsclient.onmessage = (event) => {
+          console.log(JSON.parse(event.data).data.sia.timestamp);
+          setTimestampA(JSON.parse(event.data).data.sia.timestamp) 
+        }
+    
+        wsclient.onerror = error => {
+            console.log(`WebSocket error: ${error}`);
+        };
+    
+        wsclient.onclose = () => {
+            console.log("disconnected");
+        }
+    }, []);
+
+    return timestampA
+}
+
+const B = () => {
+  const [descriptionB, setDescriptionB] = useState(null);
+  const [timestampB, setTimestampB] = useState(null);
+
+  useEffect(() => {
+    wsclient.onopen = () => {
+    };
+    
+    wsclient.onmessage = (event) => {
+          console.log(JSON.parse(event.data).data.sia.timestamp);
+          setTimestampB(JSON.parse(event.data).data.sia.timestamp) 
+        }
+    
+        wsclient.onerror = error => {
+            console.log(`WebSocket error: ${error}`);
+        };
+    
+        wsclient.onclose = () => {
+            console.log("disconnected");
+        }
+    }, []);
+
+    return timestampB
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <Zone name="LOUNGE" />
+    <A />
+    <B />
+    </>
   );
 }
 
