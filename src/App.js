@@ -1,65 +1,29 @@
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Container from 'react-bootstrap/Container';
+import Stack from 'react-bootstrap/Stack';
+
+import { WebsocketProvider } from "./context/WebsocketProvider";
+import { Header } from "./components/Header";
 import { Zone } from "./components/Zone";
-import React, { useState, useEffect } from 'react';
-import { wsclient } from "./socket.config";
-
-const A = () => {
-  const [descriptionA, setDescriptionA] = useState(null);
-  const [timestampA, setTimestampA] = useState(null);
-
-  useEffect(() => {
-    wsclient.onopen = () => {
-    };
-    
-    wsclient.onmessage = (event) => {
-          console.log(JSON.parse(event.data).data.sia.timestamp);
-          setTimestampA(JSON.parse(event.data).data.sia.timestamp) 
-        }
-    
-        wsclient.onerror = error => {
-            console.log(`WebSocket error: ${error}`);
-        };
-    
-        wsclient.onclose = () => {
-            console.log("disconnected");
-        }
-    }, []);
-
-    return timestampA
-}
-
-const B = () => {
-  const [descriptionB, setDescriptionB] = useState(null);
-  const [timestampB, setTimestampB] = useState(null);
-
-  useEffect(() => {
-    wsclient.onopen = () => {
-    };
-    
-    wsclient.onmessage = (event) => {
-          console.log(JSON.parse(event.data).data.sia.timestamp);
-          setTimestampB(JSON.parse(event.data).data.sia.timestamp) 
-        }
-    
-        wsclient.onerror = error => {
-            console.log(`WebSocket error: ${error}`);
-        };
-    
-        wsclient.onclose = () => {
-            console.log("disconnected");
-        }
-    }, []);
-
-    return timestampB
-}
+import { Raw } from "./components/Raw";
 
 function App() {
   return (
     <>
-    <Zone name="LOUNGE" />
-    <A />
-    <B />
+    <Container>
+      <Header />
+      <WebsocketProvider>
+        <Raw />
+         <Stack direction="horizontal" gap={3}>
+          <Zone description="Lounge¦ZONE¦2¦GROUND FLOOR" friendlyName="Lounge" />
+          <Zone description="Bedroom¦ZONE¦2¦FIRST FLOOR" friendlyName="Bedroom" />
+          <Zone description="Downstairs Landing¦ZONE¦2¦GROUND FLOOR" friendlyName="Downstairs Landing" />
+        </Stack>
+      </WebsocketProvider>
+    </Container>
     </>
-  );
+  )
 }
 
 export default App;

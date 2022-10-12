@@ -18,7 +18,7 @@ function randomIntFromInterval(min, max) { // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
 const motionMessageArr = [
-    {"status":"success","data":{"sia":{"device_id":"1000","timestamp":"XXX","sia_code":"ZC","sia_address":"7","description":"Upstairs Landing¦ZONE¦2¦FIRST FLOOR","flags":"","verification_id":"0"}}},
+    {"status":"success","data":{"sia":{"device_id":"1000","timestamp":"XXX","sia_code":"ZC","sia_address":"7","description":"Bedroom¦ZONE¦2¦FIRST FLOOR","flags":"","verification_id":"0"}}},
     {"status":"success","data":{"sia":{"device_id":"1000","timestamp":"XXX","sia_code":"ZC","sia_address":"7","description":"Downstairs Landing¦ZONE¦2¦GROUND FLOOR","flags":"","verification_id":"0"}}},
     {"status":"success","data":{"sia":{"device_id":"1000","timestamp":"XXX","sia_code":"ZC","sia_address":"7","description":"Lounge¦ZONE¦2¦GROUND FLOOR","flags":"","verification_id":"0"}}}
 ];
