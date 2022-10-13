@@ -25,7 +25,7 @@ export const Raw = () => {
   
     return (
       <Container> 
-        <Alert key="secondary" variant="secondary">
+        <Alert key="dark" variant="dark">
           <Emoji symbol="💌 " label="message"/>
            Latest Websocket Message: <b>{zone}</b> received at: <b>{cleanTimestamp}</b>
         </Alert>
