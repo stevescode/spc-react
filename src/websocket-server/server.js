@@ -18,9 +18,14 @@ function randomIntFromInterval(min, max) { // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
 const motionMessageArr = [
-    {"status":"success","data":{"sia":{"device_id":"1000","timestamp":"XXX","sia_code":"ZC","sia_address":"7","description":"Bedroom¦ZONE¦2¦FIRST FLOOR","flags":"","verification_id":"0"}}},
-    {"status":"success","data":{"sia":{"device_id":"1000","timestamp":"XXX","sia_code":"ZC","sia_address":"7","description":"Downstairs Landing¦ZONE¦2¦GROUND FLOOR","flags":"","verification_id":"0"}}},
-    {"status":"success","data":{"sia":{"device_id":"1000","timestamp":"XXX","sia_code":"ZC","sia_address":"7","description":"Lounge¦ZONE¦2¦GROUND FLOOR","flags":"","verification_id":"0"}}}
+    {"status":"success","data":{"sia":{"device_id":"1000","timestamp":"XXX","sia_code":"ZC","sia_address":"7","description":"Lounge¦ZONE¦1¦GROUND FLOOR","flags":"","verification_id":"0"}}},
+    {"status":"success","data":{"sia":{"device_id":"1000","timestamp":"XXX","sia_code":"ZC","sia_address":"7","description":"Front Bedroom¦ZONE¦2¦FIRST FLOOR","flags":"","verification_id":"0"}}},
+    {"status":"success","data":{"sia":{"device_id":"1000","timestamp":"XXX","sia_code":"ZC","sia_address":"7","description":"Nursery¦ZONE¦2¦FIRST FLOOR","flags":"","verification_id":"0"}}},
+    {"status":"success","data":{"sia":{"device_id":"1000","timestamp":"XXX","sia_code":"ZC","sia_address":"7","description":"Kitchen Right¦ZONE¦1¦GROUND FLOOR","flags":"","verification_id":"0"}}},
+    {"status":"success","data":{"sia":{"device_id":"1000","timestamp":"XXX","sia_code":"ZC","sia_address":"7","description":"Kitchen Left¦ZONE¦1¦GROUND FLOOR","flags":"","verification_id":"0"}}},
+    {"status":"success","data":{"sia":{"device_id":"1000","timestamp":"XXX","sia_code":"ZC","sia_address":"7","description":"Downstairs Hall¦ZONE¦1¦GROUND FLOOR","flags":"","verification_id":"0"}}},
+    {"status":"success","data":{"sia":{"device_id":"1000","timestamp":"XXX","sia_code":"ZC","sia_address":"7","description":"Upstairs Landing¦ZONE¦2¦FIRST FLOOR","flags":"","verification_id":"0"}}},
+    {"status":"success","data":{"sia":{"device_id":"1000","timestamp":"XXX","sia_code":"ZC","sia_address":"7","description":"Garage¦ZONE¦1¦GROUND FLOOR","flags":"","verification_id":"0"}}}
 ];
 
 function pickRandomMsg(msgArr) {
@@ -33,16 +38,7 @@ wss.on('connection', (ws) => {
         const msg = JSON.stringify(pickRandomMsg(motionMessageArr));
         const msgNow = msg.replace("XXX", Date.time());
         ws.send(msgNow);
-        //console.log('Sent Message: ' + msgNow);
-    }, 4000);
-
-    //connection is up, let's add a simple simple event
-    ws.on('message', (message) => {
-
-        //log the received message and send it back to the client
-        console.log('received: %s', message);
-        ws.send(`Hello, you sent -> ${message}`);
-    });
+    }, 10000);
 });
 
 //start our server

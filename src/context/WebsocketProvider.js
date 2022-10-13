@@ -4,8 +4,13 @@ import React, { useState, useEffect, useRef, createContext } from 'react';
 export const WebsocketContext = createContext(false, null);
 //                                            ready, value
 
-const WEBSOCKET_IP = "127.0.0.1";
-const WEBSOCKET_PORT= "8999";
+// STAGING
+ const WEBSOCKET_IP = "127.0.0.1";
+ const WEBSOCKET_PORT= "8999";
+
+// PRODUCTION
+// const WEBSOCKET_IP = "192.168.100.123";
+// const WEBSOCKET_PORT= "8088/ws/spc";
 
 export const WebsocketProvider = ({ children }) => {
     const [isReady, setIsReady] = useState(false);
@@ -23,7 +28,7 @@ export const WebsocketProvider = ({ children }) => {
       ws.current = socket;
   
       return () => {
-        //socket.close();
+        socket.close();
       };
     }, []);
   

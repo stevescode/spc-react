@@ -1,11 +1,10 @@
-import Spinner from 'react-bootstrap/Spinner';
+import { Head } from "./styles"
+import Emoji from "../Emoji";
 
 export const Header = () => {
     return (
       <>
-      <Spinner animation="grow" variant="primary" />
-
-        SPC Zone Monitor
+      <Head><Emoji symbol="🚨 " label="alarm"/>SPC Zone Monitor</Head>
       </>
     );
   };
