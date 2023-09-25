@@ -38,6 +38,7 @@ wss.on('connection', (ws) => {
         const msg = JSON.stringify(pickRandomMsg(motionMessageArr));
         const msgNow = msg.replace("XXX", Date.time());
         ws.send(msgNow);
+        console.log(msg);
     }, 10000);
 });
 
