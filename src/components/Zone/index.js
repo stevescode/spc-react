@@ -2,8 +2,12 @@ import { useContext, useState, useEffect } from "react";
 import { WebsocketContext } from "../../context/WebsocketProvider";
 import { ZoneStyle, ZoneName, Gap } from "./styles"
 
-Date.prototype.toUnixTime = function() { return this.getTime()/1000|0 };
-Date.time = function() { return new Date().toUnixTime(); }
+//Date.prototype.toUnixTime = function() { return this.getTime()/1000|0 };
+//Date.time = function() { return new Date().toUnixTime(); }
+
+const SECONDS_IN_MINUTE = 60;
+const SECONDS_IN_HOUR = SECONDS_IN_MINUTE * 60;
+const SECONDS_IN_DAY = SECONDS_IN_HOUR * 24;
 
 export const Zone = ( {description, friendlyName}) => {
     //eslint-disable-next-line
@@ -38,16 +42,20 @@ export const Zone = ( {description, friendlyName}) => {
       return function cleanup() {
         clearInterval(timerId);
       };
-    }, [nowEpoch]);
+    }, [nowEpoch, messageTimestamp]);
 
     const sinceLastMsg = (messageTimestamp, nowEpoch) => {
-      const gap = (messageTimestamp - nowEpoch)*-1;
+      const gap = nowEpoch - messageTimestamp;
 
-      if (gap > 1660000000) {
+      if (gap > SECONDS_IN_DAY) {
         return "no motion";
-      }
-      else {
-        return gap + " seconds ago";
+      } else {
+        // Temporary fix below - need to id why I'm getting -1h -1m -1s sometimes.
+        let adjustedGap = gap+3;
+        const secondsAgo = adjustedGap % SECONDS_IN_MINUTE;
+        const minutesAgo = Math.floor(adjustedGap / SECONDS_IN_MINUTE) % SECONDS_IN_MINUTE;
+        const hoursAgo = Math.floor(adjustedGap / SECONDS_IN_HOUR) % SECONDS_IN_HOUR;
+        return `${hoursAgo}h ${minutesAgo}m ${secondsAgo}s ago`;
       }
     }
   
