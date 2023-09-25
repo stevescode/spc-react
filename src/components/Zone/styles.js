@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ZoneStyle = styled.div`
-  background-color: #ccc;
+  //background-color: #ccc;
   padding: 1em;
   margin: 0 0 1em 0;
   border-radius: 0.5em;
