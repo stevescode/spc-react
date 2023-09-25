@@ -1,16 +1,12 @@
 // https://www.kianmusser.com/articles/react-where-put-websocket/
 import React, { useState, useEffect, useRef, createContext } from 'react';
+import config from '../config/environment';
 
 export const WebsocketContext = createContext(false, null);
 //                                            ready, value
 
-// STAGING
- const WEBSOCKET_IP = "127.0.0.1";
- const WEBSOCKET_PORT= "8999";
+const { WEBSOCKET_IP, WEBSOCKET_PORT } = config; // Use the configuration
 
-// PRODUCTION
-// const WEBSOCKET_IP = "192.168.100.123";
-// const WEBSOCKET_PORT= "8088/ws/spc";
 
 export const WebsocketProvider = ({ children }) => {
     const [isReady, setIsReady] = useState(false);
@@ -21,14 +17,31 @@ export const WebsocketProvider = ({ children }) => {
     useEffect(() => {
       const socket = new WebSocket('ws://'+WEBSOCKET_IP+':'+WEBSOCKET_PORT);
   
-      socket.onopen = () => setIsReady(true);
-      socket.onclose = () => setIsReady(false);
-      socket.onmessage = (msg) => setVal(msg.data);
+      socket.onopen = () => {
+        console.log('WebSocket connection opened');
+        setIsReady(true);
+      };
+    
+      socket.onclose = () => {
+        console.log('WebSocket connection closed');
+        setIsReady(false);
+      };
+    
+      socket.onmessage = (msg) => {
+        console.log('Received message:', msg.data);
+        setVal(msg.data);
+      };
+    
+      socket.onerror = (error) => {
+        console.error('WebSocket error:', error);
+      };
   
       ws.current = socket;
   
       return () => {
-        socket.close();
+        if (socket.readyState === WebSocket.OPEN) {
+          socket.close();
+        }
       };
     }, []);
   
