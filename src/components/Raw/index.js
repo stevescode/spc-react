@@ -4,31 +4,30 @@ import Alert from 'react-bootstrap/Alert';
 import { Container } from "./styles";
 import Emoji from "../Emoji";
 
-
 export const Raw = () => {
-    const [ready, val] = useContext(WebsocketContext);
-    const [zone, setZone] = useState(0);
-    const [timestamp, setTimestamp] = useState(0);
-    const [cleanTimestamp, setCleanTimestamp] = useState(0);
-  
-    useEffect(() => {
-      if (val) {
-        setZone(JSON.parse(val).data.sia.description);
-        setTimestamp(JSON.parse(val).data.sia.timestamp);
-        const d = new Date(timestamp*1000);
-        // Careful, the string output here can vary by implementation...
-        const strDate = d.toLocaleString();
-        setCleanTimestamp(strDate);
+  const [ready, val] = useContext(WebsocketContext);
+  const [zone, setZone] = useState("");
+  const [cleanTimestamp, setCleanTimestamp] = useState("");
 
+  useEffect(() => {
+    if (ready && val) {
+      const { description, timestamp } = JSON.parse(val).data.sia;
+      const firstWord = description.split('¦')[0]; // Split and get the first part
+      setZone(firstWord);
+
+      const d = new Date(timestamp * 1000);
+      const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+      const strDate = d.toLocaleString(undefined, options);
+      setCleanTimestamp(strDate);
     }
-    }, [val]);
-  
-    return (
-      <Container> 
-        <Alert key="dark" variant="dark">
-          <Emoji symbol="💌 " label="message"/>
-           Latest Websocket Message: <b>{zone}</b> received at: <b>{cleanTimestamp}</b>
-        </Alert>
-      </Container>
-    );
-  };
+  }, [ready, val]);
+
+  return (
+    <Container>
+      <Alert key="dark" variant="dark">
+        <Emoji symbol="💌 " label="message"/>
+         Latest Websocket Message: <b>{zone}</b> received at: <b>{cleanTimestamp}</b>
+      </Alert>
+    </Container>
+  );
+};
