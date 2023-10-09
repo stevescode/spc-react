@@ -4,8 +4,9 @@ import config from '../config/environment';
 
 export const WebsocketContext = createContext(false, null);
 //                                            ready, value
+console.log(config);
 
-const { WEBSOCKET_IP, WEBSOCKET_PORT } = config; // Use the configuration
+const { WEBSOCKET_IP, WEBSOCKET_PORT } = config;
 
 
 export const WebsocketProvider = ({ children }) => {
@@ -28,7 +29,7 @@ export const WebsocketProvider = ({ children }) => {
       };
     
       socket.onmessage = (msg) => {
-        console.log('Received message:', msg.data);
+        //console.log('Received message:', msg.data);
         setVal(msg.data);
       };
     
