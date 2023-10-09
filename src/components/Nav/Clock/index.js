@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useTheme } from '../../../context/ThemeProvider';
 import { ClockStyle } from './styles';
-import Emoji from "../Emoji";
 
 export const Clock = () => {
   const [date, setDate] = useState(new Date());
+  const { isDarkTheme } = useTheme();
+  const { theme } = useTheme();
   
   function refreshClock() {
     setDate(new Date());
@@ -15,8 +17,7 @@ export const Clock = () => {
     };
   }, []);
   return (
-    <ClockStyle>
-      <Emoji symbol="⏰ " label="clock"/>
+    <ClockStyle className={`${isDarkTheme ? 'dark' : 'light'}`} theme={theme}>
       {date.toLocaleTimeString()}
     </ClockStyle>
   );
