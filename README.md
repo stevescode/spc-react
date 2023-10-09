@@ -1,7 +1,7 @@
 # SPC Motion Monitor
 React based app for monitoring the status of zones in an [Vanderbilt SPC system](https://www.lundix.se/smarta-losningar/). Each zone is displayed with a counter showing when motion was last detected.
 
-![alt text](https://raw.githubusercontent.com/stevescode/spc-react/main/sample.png "SPC-React Screenshot")
+![alt text](https://raw.githubusercontent.com/stevescode/spc-react/main/app-sample.png "SPC-React Screenshot")
 
 ## Pre-reqs
 Lindux Gateway
