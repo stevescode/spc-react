@@ -1,37 +1,23 @@
-const zones = [
-    {
-      description: 'Upstairs Landing¦ZONE¦2¦FIRST FLOOR',
-      friendlyName: 'Upstairs Landing',
-    },
-    {
-      description: 'Front Bedroom¦ZONE¦2¦FIRST FLOOR',
-      friendlyName: 'Front Bedroom',
-    },
-    {
-      description: 'Nursery¦ZONE¦2¦FIRST FLOOR',
-      friendlyName: 'Nursery',
-    },
-    {
-      description: 'Garage¦ZONE¦1¦GROUND FLOOR',
-      friendlyName: 'Garage',
-    },
-    {
-      description: 'Downstairs Hall¦ZONE¦1¦GROUND FLOOR',
-      friendlyName: 'Downstairs Hall',
-    },
-    {
-      description: 'Lounge¦ZONE¦1¦GROUND FLOOR',
-      friendlyName: 'Lounge',
-    },
-    {
-      description: 'Kitchen Left¦ZONE¦1¦GROUND FLOOR',
-      friendlyName: 'Kitchen Left',
-    },
-    {
-      description: 'Kitchen Right¦ZONE¦1¦GROUND FLOOR',
-      friendlyName: 'Kitchen Right',
-    },
-  ];
-  
-  export default zones;
-  
+export const responseData = {
+  "status": "success",
+  "data": {
+    "zone": [
+      {"id": "1", "type": "0", "zone_name": "Lounge", "area": "1", "area_name": "GROUND FLOOR", "input": "0", "logic_input": "0", "status": "0", "proc_state": "0", "inhibit_allowed": "1", "isolate_allowed": "1"},
+      {"id": "2", "type": "0", "zone_name": "Front Bedroom", "area": "2", "area_name": "FIRST FLOOR", "input": "0", "logic_input": "0", "status": "0", "proc_state": "0", "inhibit_allowed": "1", "isolate_allowed": "1"},
+      {"id": "3", "type": "0", "zone_name": "Nursery", "area": "2", "area_name": "FIRST FLOOR", "input": "0", "logic_input": "0", "status": "0", "proc_state": "0", "inhibit_allowed": "1", "isolate_allowed": "1"},
+      {"id": "4", "type": "0", "zone_name": "Kitchen Right", "area": "1", "area_name": "GROUND FLOOR", "input": "0", "logic_input": "0", "status": "0", "proc_state": "0", "inhibit_allowed": "1", "isolate_allowed": "1"},
+      {"id": "5", "type": "0", "zone_name": "Kitchen Left", "area": "1", "area_name": "GROUND FLOOR", "input": "0", "logic_input": "0", "status": "0", "proc_state": "0", "inhibit_allowed": "1", "isolate_allowed": "1"},
+      {"id": "6", "type": "0", "zone_name": "Downstairs Hall", "area": "1", "area_name": "GROUND FLOOR", "input": "0", "logic_input": "0", "status": "0", "proc_state": "0", "inhibit_allowed": "1", "isolate_allowed": "1"},
+      {"id": "7", "type": "0", "zone_name": "Upstairs Landing", "area": "2", "area_name": "FIRST FLOOR", "input": "0", "logic_input": "0", "status": "0", "proc_state": "0", "inhibit_allowed": "1", "isolate_allowed": "1"},
+      {"id": "8", "type": "0", "zone_name": "Garage", "area": "1", "area_name": "GROUND FLOOR", "input": "0", "logic_input": "0", "status": "0", "proc_state": "0", "inhibit_allowed": "1", "isolate_allowed": "1"}
+    ]
+  }
+};
+
+const zones = responseData.data.zone.map(zone => {
+  const description = `${zone.zone_name}¦ZONE¦${zone.area}¦${zone.area_name}`;
+  const friendlyName = zone.zone_name;
+  return { description, friendlyName };
+});
+
+export default zones;
